@@ -1,0 +1,77 @@
+﻿<link rel="import" href="../../polymer/polymer.html" />
+<link rel="import" href="../../krypton-entity/krypton-entity.html" />
+<link rel="import" href="../../paper-button/paper-button.html" />
+<link rel="import" href="../../paper-input/paper-input.html" />
+<dom-module id="demo-master">
+    <template>
+        <krypton-entity id="krypton" key="5" base-url="https://jsonplaceholder.typicode.com/" model-name="posts" item="{{entityList}}"></krypton-entity>
+        {{entityList.title}}
+        {{entityList.body}}
+        <div hidden$="{{!editValue}}">
+            <h1>Edit Form</h1>
+            <paper-input value="{{entityList.title}}"></paper-input>
+            <paper-input value="{{entityList.body}}"></paper-input>
+            <paper-button on-click="saveItem">Save Changes</paper-button>
+        </div>
+        <div hidden$="{{!createStuff}}">
+            <h1>Create Form</h1>
+            <paper-input value="{{entityList.title}}"></paper-input>
+            <paper-input value="{{entityList.body}}"></paper-input>
+            <paper-button on-click="createItem">Save</paper-button>
+        </div>
+        <paper-button on-click="runFunction">GET</paper-button>
+
+        <paper-button on-click="updateItem">Edit</paper-button>
+
+        <paper-button on-click="deleteItem">Delete</paper-button>
+
+        <paper-button on-click="newItem">New</paper-button>
+    </template>
+    <script>
+        Polymer({
+            is: "demo-master",
+            properties:{
+                entityList: { type: Object, notify: true },
+                editValue: { type: Boolean, notify: true, value: false },
+                createStuff: { type: Boolean, notify: true, value: false }
+            },
+            listeners: {
+                "krypton-get": "_onKryptonGet",
+                "krypton-create": "_onKryptonCreate",
+                "krypton-update": "_onKryptonUpdate",
+                "krypton-delete": "_onKryptonDelete"
+            },
+            _onKryptonGet: function () {
+                console.log("GET")
+            },
+            _onKryptonCreate: function () {
+                console.log("POST")
+            },
+            _onKryptonUpdate: function () {
+                console.log("PUT")
+            },
+            _onKryptonDelete: function () {
+                console.log("DELETE")
+            },
+            newItem: function () {
+                this.editValue = true;
+            },
+            runFunction: function () {
+                this.$.krypton.getItem();
+            },
+            createItem: function () {
+                this.$.krypton.updateItem();
+            },
+            updateItem: function () {
+                this.createStuff = true;
+            },
+            saveItem: function () {
+                this.$.krypton.updateItem();
+            },
+            deleteItem: function () {
+                this.$.krypton.deleteItem();
+            }
+
+        })
+    </script>
+</dom-module>

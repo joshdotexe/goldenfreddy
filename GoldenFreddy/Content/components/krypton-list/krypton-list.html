@@ -1,0 +1,58 @@
+<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../iron-ajax/iron-ajax.html" />
+<dom-module id="krypton-list">
+    <!--
+    `<krypton-list>` provides simple methods to fetch a list of entities. Make sure that baseUrl is set on the window
+        context before using this element.
+    Example:
+        <script>
+            window.baseUrl = "http://mydevsite.blah.com";
+        </script>
+        <krypton-list path="/api/cars/byOwner?ownerId={{ownerId}}"></krypton-list>
+    @group krypton Elements
+    @element krypton-list
+    -->
+    <template>
+        <iron-ajax 
+            id="ajax"
+            handle-as="json"
+            on-response="_onResponse"
+            content-type="application/json">
+        </iron-ajax>
+    </template>
+    <script>
+        Polymer({
+            is: "krypton-list",
+            properties: {
+                /* Output property, the list of entitys from your c# */
+                items: { type: Array, notify: true },
+                /* Base part of the url. Usually set on window context. */
+                baseUrl: { type: String },
+                /* Url path appended to the baseUrl */
+                path: { type: String, observer: "_pathChange" }
+            },
+            ready: function() {
+                // if baseUrl is available on the window context, grab it
+                if(this.baseUrl == undefined && window.baseUrl != undefined) {
+                    this.baseUrl = window.baseUrl;
+                }
+            },
+            // call this to force a fetch of items
+            generateRequest: function() {
+                this.$.ajax.url = this.baseUrl + this.path;
+                console.log(this.$.ajax.url);
+                this.$.ajax.generateRequest();
+            },
+            // check to make sure all bindings in the path are resolved, then generateRequest
+            _pathChange: function(path) {
+                if(path == undefined || path.indexOf("=&") != -1 || path.charAt(path.length - 1) == "=") return; 
+                this.generateRequest();
+            },
+            // Sets the items property to the e.detail of the response.
+            _onResponse: function (e) {
+                this.set("items", e.detail.response);
+                this.fire("krypton-list", this.items);
+            }
+        });
+    </script>
+</dom-module>

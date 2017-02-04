@@ -1,0 +1,36 @@
+{
+  "name": "krypton-list",
+  "description": "Polymer web component to fetch a list of entities form ASP .Net Web API",
+  "main": "krypton-list",
+  "keywords": [
+    "Polymer",
+    "web",
+    "components",
+    "ASP",
+    "Web",
+    "API"
+  ],
+  "authors": [
+    "Tyler Shaw <tylerjacobshaw@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/acaxlabs/krypton-list",
+  "ignore": [],
+  "dependencies": {
+    "paper-button": "polymerelements/paper-button#^1.0.0",
+    "paper-input": "polymerelements/paper-input#^1.0.0",
+    "iron-ajax": "polymerelements/iron-ajax#^1.0.0",
+    "polymer": "Polymer/polymer#^1.1.0",
+    "iron-component-page": "Polymer/polymerelements/iron-component-page#^1.1.0"
+  },
+  "_release": "6ecfa4dd78",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "6ecfa4dd780133bdf48075125f89bd36898e3458"
+  },
+  "_source": "git://github.com/acaxlabs/krypton-list.git",
+  "_target": "*",
+  "_originalSource": "acaxlabs/krypton-list",
+  "_direct": true
+}

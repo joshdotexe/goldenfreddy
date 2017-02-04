@@ -1,0 +1,37 @@
+﻿<link rel="import" href="../../polymer/polymer.html" />
+<link rel="import" href="../../krypton-list/krypton-list.html" />
+<link rel="import" href="../../paper-button/paper-button.html" />
+<link rel="import" href="../../paper-input/paper-input.html" />
+<dom-module id="demo-master">
+    <template>
+        <krypton-list id="krypton" base-url="https://jsonplaceholder.typicode.com/" model-name="posts" items="{{entityList}}"></krypton-list>
+        <paper-button on-click="getItems">Get List</paper-button>
+        <template is="dom-repeat" items="{{list}}">
+            <div>
+                {{item.id}}
+                {{item.userId}}
+                {{item.title}}
+                {{item.body}}
+
+            </div>
+            <div></div>
+        </template>
+    </template>
+    <script>
+        Polymer({
+            is: "demo-master",
+            properites: {
+                list: { Array }
+            },
+            listeners: {
+                "krypton-list": "_onKryptonList",
+            },
+            getItems: function () {
+                this.$.krypton.getItems();
+            },
+            _onKryptonList: function (e) {
+                this.set("list", e.detail)
+            }
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,121 @@
+<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../iron-ajax/iron-ajax.html" />
+<dom-module id="krypton-entity">
+    <!--
+    `<krypton-entity>` provides simple create, read, update and delete actions to a single entity winthin the .Net Web API framework.
+         Using the attibutes and methods built into krypton-entity, it will return your C# entity type. 
+    Example:
+        <krypton-entity id="krypton" key="{{id}}" model-name="Cars" item="{{entityType}}"></krypton-entity>
+    @group krypton Elements
+    @element krypton-entity
+    -->
+    <template>
+        <iron-ajax 
+            id="ajax"
+            handle-as="json"
+            on-response="_onResponse"
+            content-type="application/json">
+        </iron-ajax>
+    </template>
+    <script>
+        Polymer({
+            is: "krypton-entity",
+            properties: {
+                /*The id of the entity your looking for*/
+                key: { type: String, notify: true },
+                /*Two way binding property. `_onResponse` will set the `item` property to the detail on the response object. You may also bind to this property with a new item such as in the example: `<krypton-entity id="krypton" key="{{id}}" model-name="Cars" item="{{cars}}">`  <span style="color:red">`cars`</span> is the item being sent in the `createItem()` request.*/
+                item: { type: Object, notify: true },
+                /*<span style="color:red">`/api/modelName`</span>, Example: api/Cars */
+                modelName: { type: String, notify: true },
+                /*Set your own GET request to an open API*/
+                getUrl: { type: String },
+                /*Set your own POST request to an open API*/
+                createUrl: { type: String },
+                /*Set your own PUT request to an open API*/
+                updateUrl: { type: String },
+                /*Set your own DELETE request to an open API*/
+                deleteUrl: { type: String },
+                /*Define your url with this attribute. Other wise it uses the current url in the browser.*/
+                baseUrl: { type: String, notify: true },
+                /*Disable to prevent entity from auto-fetching when key is set*/
+                auto: { type: Boolean, value:true }
+            },
+            /*Runs the _modelNameChanged function when both the modelname and baseUrl attributes are set. */
+            observers:[
+                "_modelNameChanged(modelName, baseUrl)",
+                "_autoLoad(key, modelName, baseUrl)"
+            ],
+            /* loads base url if available */
+            ready: function() {
+                if(this.baseUrl == undefined && window.baseUrl != undefined) {
+                    this.baseUrl = window.baseUrl;
+                }
+            },
+            _autoLoad: function() {
+                if(this.auto) this.getItem();
+            },
+            /*Looks at the method within the request. Then fires a javascript event in the bower.The event names and there HTTP verbs are as follows:<br/>
+            GET: krypton-get <br/>
+            POST: krypton-create <br/>
+            PUT: krypton-update <br/>
+            DELETE: krypton-delete. 
+            */
+            _onResponse: function (e) {
+                console.log("response", e.detail.response);
+                switch (e.target.method) {
+                    case "GET":
+                        this.set("item", e.detail.response);
+                        this.fire("krypton-get", this.item);
+                        break;
+                    case "POST":
+                        this.set("item", e.detail.response);
+                        this.fire("krypton-create", this.item);
+                        break;
+                    case "PUT":
+                        this.set("item", e.detail.response);
+                        this.fire("krypton-update", this.item);
+                        break;
+                    case "DELETE":
+                        this.set("item", e.detail.response);
+                        this.fire("krypton-delete", this.item);
+                        break;
+                }
+            },
+            /*Sets up the url if <`baseUrl`> and <`modelName`> are defined*/
+            _modelNameChanged: function (modelName, baseUrl) {
+                if (!this.getUrl) this.getUrl = baseUrl + modelName + "/";
+                if (!this.createUrl) this.createUrl = baseUrl + modelName + "/";
+                if (!this.updateUrl) this.updateUrl = baseUrl + modelName + "/";
+                if (!this.deleteUrl) this.deleteUrl = baseUrl + modelName + "/";
+            },
+            /*GET request with the Id of entity you're looking for.*/
+            getItem: function () {
+                this.$.ajax.method = "GET";
+                this.$.ajax.url = this.getUrl + this.key;
+                this.$.ajax.body = null;
+                this.$.ajax.generateRequest();
+            },
+            /*POST request with a new entityType.*/
+            createItem: function () {
+                this.$.ajax.method = "POST";
+                this.$.ajax.url = this.createUrl;
+                this.$.ajax.body = this.item;
+                this.$.ajax.generateRequest();
+            },
+            /*PUT request with the Id of entity you're looking for.*/
+            updateItem: function () {
+                this.$.ajax.method = "PUT";
+                this.$.ajax.url = this.updateUrl + this.key;
+                this.$.ajax.body = this.item;
+                this.$.ajax.generateRequest();
+            },
+            /*DELETE request with the Id of entity you're looking for.*/
+            deleteItem: function () {
+                this.$.ajax.method = "DELETE";
+                this.$.ajax.url = this.deleteUrl + this.key;
+                this.$.ajax.body = null;
+                this.$.ajax.generateRequest();
+            },
+        })
+    </script>
+</dom-module>

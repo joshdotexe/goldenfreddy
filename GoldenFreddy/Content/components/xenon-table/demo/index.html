@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <script src="../../webcomponentsjs/webcomponents.js"></script>
+        <link rel="import" href="../../polymer/polymer.html"/>
+        <link rel="import" href="../../iron-icons/iron-icons.html"/>
+        <link rel="import" href="../../iron-icon/iron-icon.html"/>
+        <link rel="import" href="../xenon-table.html"/>
+        <link rel="import" href="../xenon-table-column.html"/>
+        <style>
+            body { background-color: gainsboro }
+        </style>
+    </head>
+    <body>
+        <dom-module id="demo-element">
+            <template>
+                <div style="padding:16px">This is a plain table with auto-generated columns.</div>
+                <xenon-table items="{{items}}"></xenon-table>
+                <div style="padding:16px">This is a table with full options and custom columns.</div>
+                <xenon-table heading="Full Options" items="{{items}}" page-info="{{pageInfo}}" multi-selection>
+                    <actions>
+                        <iron-icon icon="add" title="add new item"></iron-icon>
+                    </actions>
+                    <multi>
+                        <iron-icon icon="delete" title="delete items"></iron-icon>
+                    </multi>
+                    <columns>
+                        <xenon-table-column heading="Name" sort="lastName"><template>{{item.lastName}}, {{item.firstName}}</template></xenon-table-column>
+                        <xenon-table-column heading="Age" style="text-align:center"><template>{{item.age}}</template></xenon-table-column>
+                        <xenon-table-column heading="Food"><template>{{item.food}}</template></xenon-table-column>
+                    </columns>
+                </xenon-table>
+            </template>
+            <script>
+                HTMLImports.whenReady(function () {
+                    Polymer({
+                        is: 'demo-element', 
+                        properties: {
+                            items: { type:Array, value:[] },
+                            pageInfo: { type:Object }
+                        }, 
+                        ready: function() {
+                            this.items = [{"lastName":"Archer","firstName":"Don","food":"Pizza","age":"45"},{"lastName":"Archer","firstName":"Alicia","food":"Sushi","age":"33"},{"lastName":"Archer","firstName":"Jezzabelle","food":"What chu got?","age":"10"}];
+                            this.pageInfo = { page:1, total:347, pageSize: 10 };
+                        }
+                    });
+                });
+            </script>
+        </dom-module>
+        <demo-element></demo-element>
+    </body>
+</html>
