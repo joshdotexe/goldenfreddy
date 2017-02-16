@@ -35,14 +35,14 @@
   },
   "main": "iron-component-page.html",
   "ignore": [],
-  "homepage": "https://github.com/polymerelements/iron-component-page",
+  "homepage": "https://github.com/PolymerElements/iron-component-page",
   "_release": "1.1.8",
   "_resolution": {
     "type": "version",
     "tag": "v1.1.8",
     "commit": "c9408d027934af35d0b3430409f97799c1b42111"
   },
-  "_source": "git://github.com/polymerelements/iron-component-page.git",
-  "_target": "^1.0.0",
-  "_originalSource": "polymerelements/iron-component-page"
+  "_source": "https://github.com/PolymerElements/iron-component-page.git",
+  "_target": "^1.1.0",
+  "_originalSource": "Polymer/polymerelements/iron-component-page"
 }

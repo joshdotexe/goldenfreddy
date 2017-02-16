@@ -17,7 +17,8 @@
             id="ajax"
             handle-as="json"
             on-response="_onResponse"
-            content-type="application/json">
+            content-type="application/json"
+            loading="{{loading}}">
         </iron-ajax>
     </template>
     <script>
@@ -29,7 +30,9 @@
                 /* Base part of the url. Usually set on window context. */
                 baseUrl: { type: String },
                 /* Url path appended to the baseUrl */
-                path: { type: String, observer: "_pathChange" }
+                path: { type: String, observer: "_pathChange" },
+                /* false, true if data is being fetched from server */
+                loading: { type: Boolean, notify: true, value: false }
             },
             ready: function() {
                 // if baseUrl is available on the window context, grab it
