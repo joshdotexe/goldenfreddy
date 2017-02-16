@@ -30,5 +30,8 @@ namespace GoldenFreddy.Models
         public string Phone { get; set; }
         public string Password { get; set; }
         public int Badges { get; set; }
+        public ICollection<CustomerInvite> Invites { get; set; }
+        public ICollection<CustomerMessage> Messages { get; set; }
+
     }
 }

@@ -18,7 +18,7 @@ namespace GoldenFreddy.Controllers
         // GET: CustomerInvites
         public async Task<ActionResult> Index()
         {
-            var customerInvites = db.CustomerInvites.Include(c => c.FromCustomer).Include(c => c.Tocustomer);
+            var customerInvites = db.CustomerInvites.Include(c => c.FromCustomer).Include(c => c.ToCustomer);
             return View(await customerInvites.ToListAsync());
         }
 

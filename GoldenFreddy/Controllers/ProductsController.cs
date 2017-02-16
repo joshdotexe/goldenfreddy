@@ -18,8 +18,8 @@ namespace GoldenFreddy.Controllers
         // GET: Products
         public async Task<ActionResult> Index()
         {
-            var products = db.Products.Include(p => p.Business).Include(p => p.Order);
-            return View(await products.ToListAsync());
+            //var products = db.Products.Include(p => p.Business).Include(p => p.Order);
+            return View(await db.Products.ToListAsync());
         }
 
         // GET: Products/Details/5

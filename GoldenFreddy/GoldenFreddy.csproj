@@ -134,6 +134,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\components\golden-freddy\" />
+    <Folder Include="Views\App\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -175,11 +177,13 @@
     <Compile Include="Controllers\Api\CustomersController.cs" />
     <Compile Include="Controllers\Api\OrdersController.cs" />
     <Compile Include="Controllers\Api\ProductsController.cs" />
+    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\BusinessesController.cs" />
     <Compile Include="Controllers\BusinessLocationsController.cs" />
     <Compile Include="Controllers\CustomerInvitesController.cs" />
     <Compile Include="Controllers\CustomerMessagesController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -201,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\app-theme.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -300,6 +305,9 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Shared\_Dashboard.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\components\hydrolysis\custom_typings\doctrine.d.ts" />

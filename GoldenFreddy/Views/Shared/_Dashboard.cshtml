@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    @RenderSection("scripts", required: false)
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <script src="~/Content/components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="~/Content/components/polymer/polymer.html" />
+    <link rel="import" href="~/Content/components/iron-icons/iron-icons.html" />
+    <link rel="import" href="~/Content/components/iron-icon/iron-icon.html" />
+    <link rel="import" href="~/Content/components/xenon-layout/nav-item.html" />
+    <link rel="import" href="~/Content/components/xenon-layout/xenon-search.html" />
+    <link rel="import" href="~/Content/components/xenon-layout/xenon-section.html" />
+    <link rel="import" href="~/Content/components/xenon-layout/xenon-field-group.html" />
+    <link rel="import" href="~/Content/components/xenon-layout/xenon-layout.html" />
+    <link rel="import" href="~/Content/components/xenon-photo-card/xenon-photo-card.html" />
+    <link rel="import" href="~/Content/components/paper-button/paper-button.html" />
+    <link rel="import" href="~/Content/components/paper-menu-button/paper-menu-button.html" />
+    <link rel="import" href="~/Content/components/paper-item/paper-item.html" />
+    <link rel="import" href="~/Content/components/paper-icon-button/paper-icon-button.html" />
+    <link rel="import" href="~/Content/components/paper-input/paper-input.html" />
+    <link rel="import" href="~/Content/app-theme.html" />
+    <style>
+        body, html { height: 100%; margin: 0px; font-family: "Roboto", Arial, Helvetica, sans-serif; }
+        a { color: #607D8B; text-decoration: none; }
+    </style>
+    <style is="custom-style" include="app-theme">
+        .primary { background-color: var(--accent-color); color: white; }
+        header a { color: white; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div>
+        <xenon-layout heading="@ViewBag.ApplicationName">
+            <header>
+                <xenon-search></xenon-search>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a href="/account/logoff">Log Out</a>
+                }
+                else
+                {
+                    <a href="/account/login">Log In</a>
+                }
+            </header>
+            <nav>
+                <nav-item icon="home" href="/">Dashboard</nav-item>
+                <nav-item icon="shopping-basket" href="/Products">Products</nav-item>
+                <nav-item icon="receipt" href="/Orders">Orders</nav-item>
+                <nav-item icon="settings" href="/Settings">Settings</nav-item>
+
+                <spacer></spacer>
+            </nav>
+            <main>
+                @if (TempData["message"] != null)
+            {
+                var style = TempData["message-style"];
+                    <xenon-section>
+                        <div class="@style">@Html.Raw(TempData["message"])</div>
+                    </xenon-section>
+
+                }
+                @RenderBody()
+                <!-- this is a spacer to stick the footer to the bottom -->
+                <spacer></spacer>
+                <xenon-section style="background-color:gainsboro; color:gray">
+                    <ul>
+                        <li>Privacy Policy</li>
+                    </ul>
+                    <ul>
+                        <li>About Us</li>
+                    </ul>
+                    <ul>
+                        <li>User Agreement</li>
+                    </ul>
+                </xenon-section>
+            </main>
+        </xenon-layout>
+        <div hidden>
+
+        </div>
+
+    </div>
+</body>
+</html>
