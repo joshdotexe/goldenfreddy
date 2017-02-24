@@ -1,0 +1,45 @@
+﻿<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../iron-form/iron-form.html" />
+<link rel="import" href="../paper-input/paper-input.html" />
+<link rel="import" href="../xenon-layout/xenon-field-group.html" />
+<link rel="import" href="../xenon-address/xenon-address.html"/>
+<!--
+`<lithium-quote>` is an awesome element.
+
+Example:
+
+    <golden-freddy-business-location></golden-freddy-business-location>
+
+### Styling
+    No styling
+
+@element golden-freddy-business
+@demo demo/index.html
+-->
+<dom-module id="golden-freddy-business-location">
+    <template>
+        <xenon-field-group>
+            <form is="iron-form" id="form">
+                <xenon-address address1="{{businessLocation.Address1}}"
+                               address2="{{businessLocation.Address2}}"
+                               city="{{businessLocation.City}}"
+                               state="{{businessLocation.StateCode}}"
+                               zip="{{businessLocation.ZipCode}}"></xenon-address>
+                <paper-input label="Phone" value="{{businessLocation.Phone}}" required></paper-input>
+             </form>
+        </xenon-field-group>
+    </template>
+    <script>
+		Polymer({
+		    is: "golden-freddy-business-location",
+			properties: {
+				/* this property has a comment description */
+				businessLocation: { type: Object, notify:true }
+			},
+			validate: function () {
+			    return this.$.form.validate();
+			}
+		});
+    </script>
+</dom-module>
+

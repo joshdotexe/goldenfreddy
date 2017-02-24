@@ -1,0 +1,79 @@
+﻿<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../golden-freddy-business/golden-freddy-business-location.html" />
+<link rel="import" href="../golden-freddy-business/golden-freddy-business.html" />
+<link rel="import" href="../golden-freddy-user/golden-freddy-user.html" />
+<link rel="import" href="../xenon-photo-card/xenon-photo-card.html"/>
+<link rel="import" href="../paper-button/paper-button.html"/>
+<link rel="import" href="../paper-toast/paper-toast.html" />
+<link rel="import" href="../iron-ajax/iron-ajax.html" />
+<!--
+`<lithium-quote>` is an awesome element.
+
+Example:
+
+    <golden-freddy-onboarding></golden-freddy-onboarding>
+
+### Styling
+    No styling
+
+@element golden-freddy-onboarding
+@demo demo/index.html
+-->
+<dom-module id="golden-freddy-onboarding">
+    <template>
+        <iron-ajax id="ajax"
+                   content-type="application/json"
+                   method="POST"
+                   body="{{onboarding}}"
+                   on-response="_onResponse"></iron-ajax>
+        <xenon-photo-card>
+            <main>
+                <golden-freddy-business id="biz" business="{{business}}"></golden-freddy-business>
+                <hr />
+                <golden-freddy-business-location id="bizloc" business-location="{{businessLocation}}"></golden-freddy-business-location>
+                <hr />
+                <golden-freddy-user id="user" user="{{user}}"></golden-freddy-user>
+            </main>
+            <buttons>
+                <spacer></spacer>
+                <paper-button class="primary" on-click="_save">Save</paper-button>
+            </buttons>
+        </xenon-photo-card>
+        <paper-toast id="toaster"></paper-toast>
+    </template>
+    <script>
+		Polymer({
+			properties: {
+				/* this property has a comment description */
+				onboarding: { type: Object, notify:true }
+			},
+			_save: function () {
+			    if (!this.$.biz.validate()) {
+			        this.showMsg("Invalid Business Information");
+			        return;
+			    }
+			    if (!this.$.bizloc.validate()) {
+			        this.showMsg("Invalid Business Location Information");
+			        return;
+			    }
+			    if (!this.$.user.validate()) {
+			        this.showMsg("Invalid User Information");
+			        return;
+			    }
+			    this.set("onboarding", { business: this.business, location: this.businessLocation, user: this.user });
+			    this.$.ajax.generateRequest();
+			},
+			showMsg: function (msg) {
+			    this.$.toaster.text = msg;
+			    this.$.toaster.show();
+			},
+			_onResponse: function (e) {
+			    if (e.detail.response === undefined) {
+			        this.showMsg("Encountered Error");
+			        return;
+			    }
+			    window.location = "/";
+			}
+		});
+    </script>
+</dom-module>

@@ -1,0 +1,48 @@
+﻿<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../iron-form/iron-form.html" />
+<link rel="import" href="../paper-input/paper-input.html" />
+<link rel="import" href="../xenon-layout/xenon-field-group.html" />
+<!--
+`<lithium-quote>` is an awesome element.
+
+Example:
+
+    <golden-freddy-user></golden-freddy-user>
+
+### Styling
+    No styling
+
+@element golden-freddy-user
+@demo demo/index.html
+-->
+<dom-module id="golden-freddy-user">
+    <template>
+        <xenon-field-group>
+            <form is="iron-form" id="form">
+                <paper-input label="User Email" value="{{user.Email}}" error-message="user email required" required></paper-input>
+                <paper-input label="User Password" value="{{user.Password}}" error-message="user password required" required></paper-input>
+            </form>
+        </xenon-field-group>
+    </template>
+    <script>
+		Polymer({
+			is:"golden-freddy-user",
+			/*
+            * Fired when something happens.
+            * @event whoaDude(value)
+            */
+
+            /*
+            * Fired when something more happens.
+            * @event holyCrap
+            */
+			properties: {
+				/* this property has a comment description */
+				user: { type: Object, notify:true }
+			},
+			validate: function () {
+			    return this.$.form.validate();
+			}
+		});
+    </script>
+</dom-module>

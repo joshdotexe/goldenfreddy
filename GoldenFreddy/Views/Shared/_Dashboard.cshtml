@@ -5,6 +5,7 @@
     @RenderSection("scripts", required: false)
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
     <script src="~/Content/components/webcomponentsjs/webcomponents-lite.min.js"></script>
     <link rel="import" href="~/Content/components/polymer/polymer.html" />
     <link rel="import" href="~/Content/components/iron-icons/iron-icons.html" />
@@ -23,29 +24,27 @@
     <link rel="import" href="~/Content/app-theme.html" />
     <style>
         body, html { height: 100%; margin: 0px; font-family: "Roboto", Arial, Helvetica, sans-serif; }
-        a { color: #607D8B; text-decoration: none; }
     </style>
     <style is="custom-style" include="app-theme">
-        .primary { background-color: var(--accent-color); color: white; }
-        header a { color: white; text-decoration: none; }
+         a{text-decoration:none; color:var(--primary-text-color);}
+        .primary{background-color:var(--default-primary-color); color:var(--primary-text-color);}
     </style>
 </head>
 <body>
-    <div>
         <xenon-layout heading="@ViewBag.ApplicationName">
             <header>
                 <xenon-search></xenon-search>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a href="/account/logoff">Log Out</a>
+                    <a href="/home/logout">Log Out</a>
                 }
                 else
                 {
-                    <a href="/account/login">Log In</a>
+                    <a href="/home/index">Log In</a>
                 }
             </header>
             <nav>
-                <nav-item icon="home" href="/">Dashboard</nav-item>
+                <nav-item icon="home" href="/dashboard">Dashboard</nav-item>
                 <nav-item icon="shopping-basket" href="/Products">Products</nav-item>
                 <nav-item icon="receipt" href="/Orders">Orders</nav-item>
                 <nav-item icon="settings" href="/Settings">Settings</nav-item>
@@ -81,6 +80,5 @@
 
         </div>
 
-    </div>
 </body>
 </html>

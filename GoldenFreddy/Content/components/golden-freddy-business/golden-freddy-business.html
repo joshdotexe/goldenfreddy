@@ -1,0 +1,44 @@
+﻿<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../iron-form/iron-form.html"/>
+<link rel="import" href="../paper-input/paper-input.html"/>
+<link rel="import" href="../xenon-layout/xenon-field-group.html"/>
+
+<!--
+`<lithium-quote>` is an awesome element.
+
+Example:
+
+    <golden-freddy-business></golden-freddy-business>
+
+### Styling
+    No styling
+
+@element golden-freddy-business
+@demo demo/index.html
+-->
+<dom-module id="golden-freddy-business">
+    <template>
+        <xenon-field-group>
+            <form is="iron-form" id="form">
+                <paper-input label="Business Name" value="{{business.Name}}" error-message="business name required" required></paper-input>
+                <paper-input label="Business Contact Email" value="{{business.Email}}" error-message="business contact email required" required></paper-input>
+                <paper-input label="Website Url" value="{{business.WebSiteUrl}}" error-message="website url required" required></paper-input>
+                <paper-input label="Business Image Url" value="{{business.ImageUrl}}" error-message="business image url required" required></paper-input>
+                <paper-input label="About" value="{{business.About}}" error-message="business about required" required></paper-input>
+             </form>
+        </xenon-field-group>
+    </template>
+    <script>
+		Polymer({
+			is:"golden-freddy-business",
+			properties: {
+				/* this property has a comment description */
+				business: { type: Object, notify:true }
+			},
+			validate: function () {
+			    return this.$.form.validate();
+			}
+		});
+    </script>
+</dom-module>
+

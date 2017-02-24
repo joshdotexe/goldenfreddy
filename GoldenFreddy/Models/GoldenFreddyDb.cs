@@ -16,22 +16,11 @@ namespace GoldenFreddy.Models
         public DbSet<CustomerInvite> CustomerInvites { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            //modelBuilder.Entity<CustomerInvite>()
-            //            .HasRequired(e => e.FromCustomer)
-            //            .WithMany(c => c.Invites)
-            //            .HasForeignKey(e => e.FromCustomerId)
-            //            .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<CustomerInvite>()
-            //            .HasRequired(e => e.ToCustomer)
-            //            .WithMany(c => c.Invites)
-            //            .HasForeignKey(e => e.ToCustomerId)
-            //            .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<Customer>()
                 .HasMany(c => c.Invites)
                 .WithRequired(i => i.FromCustomer)
@@ -56,6 +45,11 @@ namespace GoldenFreddy.Models
                 .HasForeignKey(m => m.ToCustomerId)
                 .WillCascadeOnDelete(false);
 
+        }
+
+        public GoldenFreddyDb()
+        {
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<GoldenFreddyDb>());
         }
     }
 }

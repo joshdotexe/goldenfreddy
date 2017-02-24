@@ -1,0 +1,27 @@
+{
+  "name": "xenon-photo-card",
+  "version": "1.0",
+  "description": "Creates a show hide for child elements based on url hash",
+  "authors": [
+    "ACA[X]Labs"
+  ],
+  "keywords": [
+    "web-components",
+    "polymer",
+    "paper"
+  ],
+  "main": "xenon-photo-card.html",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/acaxlabs/xenon-photo-card.git"
+  },
+  "license": "https://github.com/acaxlabs/xenon-photo-card/blob/master/LICENSE",
+  "homepage": "https://github.com/acaxlabs/xenon-photo-card",
+  "ignore": [],
+    "dependencies": {
+        "polymer": "Polymer/polymer#^1.2.0"
+    },
+     "devDependencies": {
+  }
+}

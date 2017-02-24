@@ -11,7 +11,7 @@ using GoldenFreddy.Models;
 
 namespace GoldenFreddy.Controllers
 {
-    public class CustomerInvitesController : Controller
+    public class CustomerInvitesController : AppController
     {
         private GoldenFreddyDb db = new GoldenFreddyDb();
 

@@ -1,0 +1,66 @@
+﻿<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../iron-form/iron-form.html" />
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html"/>
+<link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html"/>
+<link rel="import" href="../paper-input/paper-input.html" />
+<link rel="import" href="../xenon-layout/xenon-field-group.html" />
+<link rel="import" href="../xenon-dropdown/xenon-dropdown.html"/>
+<script src="us-states.js"></script>
+<!--
+`<lithium-quote>` is an awesome element.
+
+Example:
+
+    <xenon-address></xenon-address>
+
+### Styling
+    No styling
+
+@element xenon-address
+@demo demo/index.html
+-->
+<dom-module id="xenon-address">
+    <template>
+        <xenon-field-group>
+            <form is="iron-form" id="form">
+                <paper-input label="Address 1" value="{{address1}}" required></paper-input>
+                <paper-input label="Address 2" value="{{address2}}" required></paper-input>
+                <paper-input label="City" value="{{city}}" required></paper-input>
+                <paper-input label="State" value="{{state}}" required></paper-input>
+                <xenon-dropdown selected="{{state}}" label="State" required>
+                    <template is="dom-repeat" items="[[__states]]">
+                        <div value="[[item.abbreviation]]">[[item.name]]</div>
+                    </template>
+                </xenon-dropdown>
+                <paper-input label="Zip" value="{{zipcode}}" required></paper-input>
+            </form>
+        </xenon-field-group>
+    </template>
+    <script>
+		Polymer({
+		    is: "xenon-address",
+		    behaviors: [
+                Polymer.IronValidatableBehavior,
+                Polymer.IronFormElementBehavior
+		    ],
+		    ready: function () {
+		        this.set("__states", usstates);
+		    },
+			properties: {
+				/* this property has a comment description */
+			    address1: { type: String, notify: true },
+			    /* this property has a comment description */
+			    address2: { type: String, notify: true },
+			    /* this property has a comment description */
+			    city: { type: String, notify: true },
+			    /* this property has a comment description */
+			    state: { type: String, notify: true },
+			    /* this property has a comment description */
+			    zipcode: { type: String, notify: true },
+			},
+			validate: function () {
+			    this.$.form.validate();
+			}
+		});
+    </script>
+</dom-module>

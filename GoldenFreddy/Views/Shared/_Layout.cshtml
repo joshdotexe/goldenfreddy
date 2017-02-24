@@ -2,13 +2,59 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elite Status</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
+    <script src="~/Content/components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="~/Content/components/polymer/polymer.html" />
+    <link rel="import" href="~/Content/components/xenon-layout/xenon-layout.html"/>
+    <link rel="import" href="~/Content/components/xenon-layout/xenon-section.html"/>
+    <link rel="import" href="~/Content/app-theme.html" />
+    <style>
+        body, html { height: 100%; margin: 0px; font-family: "Roboto", Arial, Helvetica, sans-serif; }
+    </style>
+    <style is="custom-style" include="app-theme">
+        a { text-decoration: none; color: var(--primary-text-color); }
+        .primary { background-color: var(--default-primary-color); color: var(--primary-text-color); }
+    </style>
 </head>
 <body>
-    <div>
-        @RenderBody()
-    </div>
 
+    <xenon-layout heading="Elite Status" float-nav>
+        <header>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href="/home/logout">Log Out</a>
+            }
+            else
+            {
+                <a href="/home/index">Log In</a>
+            }
+        </header>
+        <main>
+            @if (TempData["message"] != null)
+            {
+                var style = TempData["message-style"];
+                <xenon-section>
+                    <div class="@style">@Html.Raw(TempData["message"])</div>
+                </xenon-section>
+            }
+            @RenderBody()
+            <!-- this is a spacer to stick the footer to the bottom -->
+            <spacer></spacer>
+            <xenon-section style="background-color:gainsboro; color:gray">
+                <ul>
+                    <li>Privacy Policy</li>
+                </ul>
+                <ul>
+                    <li>About Us</li>
+                </ul>
+                <ul>
+                    <li>User Agreement</li>
+                </ul>
+            </xenon-section>
+        </main>
+    </xenon-layout>
+    <div hidden></div>
 </body>
 </html>

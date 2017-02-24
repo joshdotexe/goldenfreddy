@@ -20,6 +20,7 @@ namespace GoldenFreddy.Models
         public DateTime Created { get; set; }
         public int Badges { get; set; }
         public ICollection<BusinessLocation> Locations { get; set; }
+        public ICollection<User> Users { get; set; }
 
     }
 }

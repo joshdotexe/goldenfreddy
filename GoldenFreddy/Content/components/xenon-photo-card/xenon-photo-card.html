@@ -1,0 +1,103 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<!--
+
+`<xenon-photo-card>` is a simple but opinionated UI card with associated photo 
+that matches the Material design specification. 
+    
+NOTES: All content inside the card must be enclosed in an element. Text nodes 
+are not distributed. When using <spacer></spacer> to right align action buttons, 
+do not make spacer a self-closing tag. 
+
+Example:
+
+    <xenon-photo-card primary-heading="Hello Card" sub-heading="This card has a subhead." src="http://lorempixel.com/600/400/sports/">
+            <div>Now is the time for all good men to come to the aid of their country.</div>
+            <actions>
+                <paper-button>Action 1</paper-button>
+                <paper-button>Action 2</paper-button>
+                <spacer></spacer>
+                <paper-button class="primary">Primary Action</paper-button>
+            </actions>
+        </xenon-photo-card>
+
+@group Xenon Elements
+@element xenon-photo-card
+@demo demo/index.html
+-->
+
+<dom-module id="xenon-photo-card">
+    <template>
+        <style>
+            :host {  display: block; margin-bottom: 8px; margin-right:8px; font-weight:normal; @apply(--paper-font-common-base); @apply(--paper-card); }
+            :host { display: flex; box-shadow: 0px 1px 3px #888888; border-radius: 2px; background-color:#ffffff; }
+            :host #photo { flex: 1 1 200px; border-bottom-right-radius: 2px; border-top-right-radius: 2px; background-size: cover; background-position-x: center; background-position-y: center; }
+            :host #frame { flex: 1 1 600px; }
+            :host #headingarea { padding: 16px; padding-bottom: 0px; }
+            :host #heading { font-size: 18pt; @apply(--xenon-heading-theme); display:flex; }
+            :host #subhead { color:grey; @apply(--xenon-subheading-theme); }
+            #body ::content p { margin: 0px; }
+            #body ::content p:not(:last-child) { margin-bottom: 20px; }
+            #footer  { padding-left:8px; padding-right:8px; padding-bottom: 8px; }
+            #footer ::content buttons { display:flex; align-items:center; padding:8px; }
+            #footer ::content buttons * { flex:0 0 auto; margin:0px; font-size: small; }
+            #footer ::content buttons *:not(:last-child) { margin-right:8px; }
+            #footer ::content buttons spacer { flex: 1 1 auto; }
+            #actionarea ::content actions { color: gray; cursor:pointer; }
+            #xbody ::content main { padding: 16px; }
+            
+            @media (max-width: 600px) {
+                :host #photo { border-bottom-right-radius: 0px; border-top-left-radius: 2px; }
+                :host { flex-direction: column-reverse; }
+                :host #photo { flex: 0 1 150px }
+                :host #frame { flex: 1 1 auto }
+            }
+        </style>
+        <div id="frame">
+            <div id="headingarea" hidden>
+                <div id="heading">
+                    <div>{{heading}}</div>
+                    <div style="flex:1 1 auto"></div>
+                    <div id="actionarea"><content select="actions"></content></div>
+                </div>
+                <div id="subhead" hidden>{{subHeading}}</div>
+            </div>
+            <div id="xbody">
+                <content select="main"></content>
+            </div>
+            <div id="footer" hidden>
+                <content id="buttons" select="buttons"></content>
+            </div>
+        </div>
+        <div id="photo" hidden></div>
+    </template>
+    <script>
+        Polymer({
+            is: "xenon-photo-card", 
+            properties: {
+                /* Sets a heading for the card. This heading will have appropriate style. */
+                heading: { type: String, observer: "_headingChange" },
+                
+                /* Sets a subHeading for the card. The subHeading is 50% grey and smaller by spec. It is not visible unless a heading is provided also. */
+                subHeading: { type: String, observer: "_subheadChange" },
+                
+                /* Sets a url for the card image. */
+                src: { type: String, observer: "_srcChange" }
+            }, 
+            ready: function() {
+                var buttons = Polymer.dom(this.$.buttons).getDistributedNodes();
+                if(buttons.length > 0) this.$.footer.hidden = false; 
+            },
+            _headingChange: function() {
+                this.$.headingarea.hidden = this.heading == null || this.heading == '' || this.heading == undefined;
+            },
+            _subheadChange: function() {
+                this.$.subhead.hidden = this.subHeading == null || this.subHeading == '' || this.subHeading == undefined;
+            },
+            _srcChange: function() {
+                this.$.photo.hidden = false;
+                this.$.photo.style.backgroundImage = "url('" + this.src + "')"
+            }
+        });
+    </script>
+
+</dom-module>

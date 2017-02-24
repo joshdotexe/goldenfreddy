@@ -11,7 +11,8 @@ using GoldenFreddy.Models;
 
 namespace GoldenFreddy.Controllers
 {
-    public class BusinessesController : Controller
+    [Authorize(Roles = "admin")]
+    public class BusinessesController : AppController
     {
         private GoldenFreddyDb db = new GoldenFreddyDb();
 
